@@ -18,7 +18,17 @@
 
 <app-navbar />
 
-<main id="main-content" role="main">
+<!--
+  min-height: 100vh en main es la clave del CLS fix:
+  El navbar es position:fixed (fuera del flujo del documento).
+  Sin min-height, cuando Angular carga y el router-outlet aun esta vacio
+  (esperando el lazy chunk de la pagina), el footer aparece casi al inicio
+  del documento. Cuando el chunk carga y llena el main, el footer salta al
+  fondo — eso es el CLS 0.922.
+  Con min-height:100vh, el main siempre ocupa la pantalla completa aunque
+  este vacio, el footer queda fuera del viewport y no causa shift.
+-->
+<main id="main-content" role="main" style="min-height:100vh">
   <router-outlet />
 </main>
 
