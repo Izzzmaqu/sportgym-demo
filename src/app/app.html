@@ -1,5 +1,5 @@
 <!--
-  APP SHELL — Estructura principal de la aplicacion
+  APP SHELL ï¿½ Estructura principal de la aplicacion
   ===================================================
   Este template define el "esqueleto" visual del sitio.
   Todo el contenido de las paginas se inyecta dentro de <router-outlet>.
@@ -17,31 +17,22 @@
 -->
 
 <!--
-  app-navbar: El componente navbar se renderiza aqui y es visible
-  en TODAS las paginas, independientemente de la ruta activa.
+  flex flex-col min-h-dvh en este wrapper garantiza que el footer
+  siempre quede pegado al fondo sin causar CLS (layout shift).
 -->
-<app-navbar />
+<div class="flex flex-col min-h-dvh">
+  <app-navbar />
 
-<!--
-  <main>: Elemento semantico HTML5 que delimita el contenido principal.
-  id="main-content": El skip-to-content link del navbar apunta a este id,
-  permitiendo a usuarios de teclado saltar directamente al contenido.
-  role="main": Redundante con <main> pero mejora compatibilidad con
-  lectores de pantalla mas antiguos.
--->
-<main id="main-content" role="main">
   <!--
-    router-outlet: Aqui Angular inyecta el componente de la pagina activa.
-    Cuando el usuario navega a "/servicios", Angular carga lazily
-    ServicesComponent y lo renderiza en este lugar.
+    flex-1: <main> ocupa todo el espacio vertical sobrante,
+    empujando el footer hacia abajo naturalmente sin mt-auto.
   -->
-  <router-outlet />
-</main>
+  <main id="main-content" role="main" class="flex-1">
+    <router-outlet />
+  </main>
 
-<!--
-  app-footer: Pie de pagina visible en todas las paginas.
--->
-<app-footer />
+  <app-footer />
+</div>
 
 <!--
   app-whatsapp-button: Boton flotante de WhatsApp.

@@ -35,9 +35,9 @@ export const GYM_INFO = {
 
   // Informacion de contacto (numeros en formato costarricense: +506 XXXX-XXXX)
   contact: {
-    phone: '+506 2256-4890',        // Telefono fijo (codigo area 2xxx = linea fija CR)
-    whatsapp: '+50688974561',       // Numero WhatsApp sin espacios para el link wa.me
-    whatsappDisplay: '+506 8897-4561', // Version visible al usuario
+    phone: '+506 0000-0000',        // Numero de demo (no real)
+    whatsapp: '+50600000000',       // Numero WhatsApp de demo sin espacios
+    whatsappDisplay: '+506 0000-0000', // Version visible al usuario
     email: 'info@sportgym.cr',
     emailContact: 'contacto@sportgym.cr',
   },
@@ -155,19 +155,19 @@ export const GYM_IDENTITY = {
       name: 'Carlos Rodríguez',
       role: 'Director General y Fundador',
       // Imagen de Unsplash — hombre profesional deportivo
-      image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&q=80',
+      image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&q=70&fit=crop&fm=webp',
       certifications: 'NSCA-CSCS, CrossFit Level 3',
     },
     {
       name: 'María Vásquez',
       role: 'Directora de Operaciones',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=80',
+      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&q=70&fit=crop&fm=webp',
       certifications: 'ACSM-CPT, Nutrición Deportiva',
     },
     {
       name: 'Andrés Mora',
       role: 'Jefe de Instructores',
-      image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&q=80',
+      image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=300&q=70&fit=crop&fm=webp',
       certifications: 'NASM-CPT, Yoga Alliance',
     },
   ],
@@ -194,7 +194,7 @@ export const TRAINING_ZONES = [
       'Equipos de última generación: cintas de correr, bicicletas estáticas, elípticas y remos. Perfecta para mejorar resistencia y quemar calorías.',
     longDescription:
       'Nuestra zona cardiovascular cuenta con más de 40 equipos de marcas premium como Life Fitness y Technogym. Pantallas individuales con entretenimiento, medición de frecuencia cardíaca y modo atletismo para entrenamiento por intervalos.',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=70&fit=crop&fm=webp',
     price: 15000,      // Precio por sesion en colones
     priceDisplay: '₡15,000 / sesión',
     capacity: 40,      // Capacidad maxima de personas simultaneas
@@ -212,7 +212,7 @@ export const TRAINING_ZONES = [
       'Espacio dedicado al entrenamiento con pesas libres: mancuernas hasta 50 kg, barras olímpicas, racks de sentadilla y bancos de press.',
     longDescription:
       'La sala de pesas libres es el corazón de SportGym. Disponemos de juegos completos de mancuernas (2-50 kg), 6 racks de sentadilla con jaulas de seguridad, barras olímpicas de competencia y suelos de goma amortiguante para proteger las articulaciones.',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70&fit=crop&fm=webp',
     price: 18000,
     priceDisplay: '₡18,000 / sesión',
     capacity: 25,
@@ -230,7 +230,7 @@ export const TRAINING_ZONES = [
       'Área abierta equipada con kettlebells, battle ropes, TRX, cajas pliométricas y barra de dominadas para entrenamiento funcional de alta intensidad.',
     longDescription:
       'El espacio funcional tiene 300 m² de área abierta para entrenamientos dinámicos. Los WODs (Workout of the Day) son dirigidos por instructores certificados CrossFit. Ideal para mejorar potencia, coordinación y resistencia muscular.',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=70&fit=crop&fm=webp',
     price: 20000,
     priceDisplay: '₡20,000 / sesión',
     capacity: 20,
@@ -248,7 +248,7 @@ export const TRAINING_ZONES = [
       'Espacio tranquilo con piso de bambú, espejos de piso a techo, blocks de yoga, correas y props premium para clases de Hatha, Vinyasa y meditación.',
     longDescription:
       'Diseñado para el bienestar mental y físico. Nuestras clases van desde yoga restaurativo para principiantes hasta Vinyasa avanzado. También ofrecemos sesiones de meditación guiada y mindfulness para la gestión del estrés.',
-    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=70&fit=crop&fm=webp',
     price: 14000,
     priceDisplay: '₡14,000 / sesión',
     capacity: 15,
@@ -266,7 +266,7 @@ export const TRAINING_ZONES = [
       'Studio de spinning con 20 bicicletas Keiser, sistema de audio envolvente y luces LED para sesiones de Cycling Indoor de alta energía.',
     longDescription:
       'Las clases de Spinning en SportGym son una experiencia inmersiva. Bicicletas Keiser M3i con telemetría Bluetooth, instructor certificado, música con BPM sincronizado al ritmo de la clase y control de intensidad individual para cada ciclista.',
-    image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&q=70&fit=crop&fm=webp',
     price: 16000,
     priceDisplay: '₡16,000 / sesión',
     capacity: 20,
@@ -284,7 +284,7 @@ export const TRAINING_ZONES = [
       'Piscina semiolímpica de 25 metros, temperatura controlada, 6 carriles y sistema de purificación de agua por ozono sin cloro irritante.',
     longDescription:
       'La piscina de SportGym es ideal para natación de competencia, terapia acuática y aqua-aeróbics. Temperatura mantenida a 28°C, iluminación LED subacuática y acceso a vestuarios con ducha de agua caliente incluida en la reservación.',
-    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=600&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=600&q=70&fit=crop&fm=webp',
     price: 22000,
     priceDisplay: '₡22,000 / sesión',
     capacity: 12,
@@ -309,7 +309,7 @@ export const TESTIMONIALS = [
     role: 'Atleta Competitiva',
     rating: 5,
     text: 'SportGym cambió mi vida. Llevo 2 años entrenando aquí y los instructores son increíbles. El ambiente es motivador y las instalaciones siempre están impecables. No hay otro lugar en San José donde entrenaría.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=70&fit=crop&fm=webp',
     zone: 'Zona Funcional',
   },
   {
@@ -318,7 +318,7 @@ export const TESTIMONIALS = [
     role: 'Ingeniero | Entrena hace 3 años',
     rating: 5,
     text: 'Comencé sin saber nada de gym y los instructores me guiaron paso a paso. Bajé 18 kg en 8 meses con el plan de entrenamiento personalizado. El sistema de reservas en la app es muy conveniente.',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=70&fit=crop&fm=webp',
     zone: 'Sala de Pesas Libres',
   },
   {
@@ -327,7 +327,7 @@ export const TESTIMONIALS = [
     role: 'Profesora | Spinning',
     rating: 5,
     text: 'Las clases de spinning son una experiencia única. La música, la energía del grupo y la calidad de las bicicletas Keiser hacen cada clase especial. Recomiendo SportGym a todos mis conocidos.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70&fit=crop&fm=webp',
     zone: 'Área de Spinning',
   },
   {
@@ -336,7 +336,7 @@ export const TESTIMONIALS = [
     role: 'Corredor Amateur',
     rating: 4,
     text: 'La zona cardiovascular tiene todo lo que necesito para mis entrenamientos de triatlón. La piscina de 25 metros es perfecta para mis sesiones de natación. Excelente personal y ambiente profesional.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=70&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=70&fit=crop&fm=webp',
     zone: 'Zona Cardiovascular',
   },
 ] as const;
@@ -356,28 +356,28 @@ export const TESTIMONIALS = [
 export const SLIDER_IMAGES = [
   {
     id: 1,
-    url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1440&q=70&fit=crop&auto=format',
+    url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1440&q=70&fit=crop&fm=webp',
     alt: 'Atleta entrenando en la zona cardiovascular de SportGym, usando una cinta de correr moderna',
     caption: 'Equipo de última generación',
     subcaption: 'Más de 40 equipos cardiovasculares para tu entrenamiento',
   },
   {
     id: 2,
-    url: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1440&q=70&fit=crop&auto=format',
+    url: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1440&q=70&fit=crop&fm=webp',
     alt: 'Entrenamiento funcional de alta intensidad en el área CrossFit de SportGym',
     caption: 'Entrenamiento funcional',
     subcaption: 'WODs diarios dirigidos por instructores CrossFit Level 2',
   },
   {
     id: 3,
-    url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1440&q=70&fit=crop&auto=format',
+    url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1440&q=70&fit=crop&fm=webp',
     alt: 'Sala de pesas libres de SportGym con racks de sentadilla y barras olímpicas',
     caption: 'Sala de pesas libre',
     subcaption: 'Racks de sentadilla, barbas olímpicas y pesas hasta 50 kg',
   },
   {
     id: 4,
-    url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1440&q=70&fit=crop&auto=format',
+    url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1440&q=70&fit=crop&fm=webp',
     alt: 'Clase de yoga en la sala de bienestar de SportGym con iluminación natural',
     caption: 'Bienestar integral',
     subcaption: 'Yoga, meditación y área de spinning para tu equilibrio físico y mental',

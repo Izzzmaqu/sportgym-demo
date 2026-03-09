@@ -86,6 +86,26 @@
   ============================================================
 */
 
+/*
+  overflow-x: hidden — evita scroll horizontal.
+  overflow-y: scroll — el scrollbar siempre esta visible, sin esto cuando
+    Angular carga contenido largo el scrollbar aparece y reduce ~17px el
+    viewport desplazando todo el layout (CLS alto).
+  scrollbar-gutter: stable — reserva el espacio del scrollbar aunque no
+    sea visible, evitando el salto de layout. Complemento moderno a
+    overflow-y: scroll.
+
+  IMPORTANTE: estas reglas van en <html>, NO en <body>.
+  Cuando body tiene overflow-x: hidden, CSS puede dejar de propagar
+  overflow-y de body al viewport, anulando la correccion de CLS.
+  Poniendolo en html el viewport siempre respeta la regla.
+*/
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 /* scroll-behavior: smooth — al hacer clic en links de ancla (#section)
    el desplazamiento es suave en lugar de un salto brusco.
    prefers-reduced-motion: desactivamos esto si el usuario prefiere menos movimiento */
@@ -110,17 +130,6 @@ body {
   /* Color de fondo y texto predeterminados del sitio */
   background-color: var(--color-primary-900);
   color: var(--color-primary-200);
-
-  /* Evita scroll horizontal por elementos que se salen del viewport */
-  overflow-x: hidden;
-
-  /*
-    overflow-y: scroll fuerza que el scrollbar vertical siempre sea visible.
-    Sin esto, cuando Angular carga el contenido y la pagina se vuelve mas larga
-    que el viewport, el scrollbar aparece y reduce el ancho del viewport ~17px,
-    desplazando todo el layout — esto causa un CLS (Cumulative Layout Shift) alto.
-  */
-  overflow-y: scroll;
 }
 
 /*
