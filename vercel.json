@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "dist/sportgym-demo/browser",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
