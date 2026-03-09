@@ -284,7 +284,7 @@ export const TRAINING_ZONES = [
       'Piscina semiolímpica de 25 metros, temperatura controlada, 6 carriles y sistema de purificación de agua por ozono sin cloro irritante.',
     longDescription:
       'La piscina de SportGym es ideal para natación de competencia, terapia acuática y aqua-aeróbics. Temperatura mantenida a 28°C, iluminación LED subacuática y acceso a vestuarios con ducha de agua caliente incluida en la reservación.',
-    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=400&h=225&fit=crop&fm=webp&q=35',,
+    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=400&h=225&fit=crop&fm=webp&q=35',
     price: 22000,
     priceDisplay: '₡22,000 / sesión',
     capacity: 12,
