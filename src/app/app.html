@@ -17,10 +17,11 @@
 -->
 
 <!--
-  flex flex-col min-h-dvh en este wrapper garantiza que el footer
-  siempre quede pegado al fondo sin causar CLS (layout shift).
+  flex flex-col min-h-screen: footer siempre pegado al fondo.
+  min-h-screen (100vh) es estable. min-h-dvh causaba CLS porque dvh
+  cambia dinamicamente cuando la barra del browser mobile aparece/desaparece.
 -->
-<div class="flex flex-col min-h-dvh">
+<div class="flex flex-col min-h-screen">
   <app-navbar />
 
   <!--
