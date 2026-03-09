@@ -16,24 +16,13 @@
   [<app-whatsapp-button> flotante]
 -->
 
-<!--
-  flex flex-col min-h-screen: footer siempre pegado al fondo.
-  min-h-screen (100vh) es estable. min-h-dvh causaba CLS porque dvh
-  cambia dinamicamente cuando la barra del browser mobile aparece/desaparece.
--->
-<div class="flex flex-col min-h-screen">
-  <app-navbar />
+<app-navbar />
 
-  <!--
-    flex-1: <main> ocupa todo el espacio vertical sobrante,
-    empujando el footer hacia abajo naturalmente sin mt-auto.
-  -->
-  <main id="main-content" role="main" class="flex-1">
-    <router-outlet />
-  </main>
+<main id="main-content" role="main">
+  <router-outlet />
+</main>
 
-  <app-footer />
-</div>
+<app-footer />
 
 <!--
   app-whatsapp-button: Boton flotante de WhatsApp.
