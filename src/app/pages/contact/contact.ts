@@ -12,7 +12,8 @@
  *  - mensaje     : texto largo, requerido, min 20 caracteres
  *  - evaluacion  : radio del 1 al 5 (calificacion del servicio), requerido
  */
-import { Component, signal, OnInit, inject } from '@angular/core';
+import { Component, signal, OnInit, AfterViewInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -38,7 +39,10 @@ const ASUNTOS = [
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './contact.html'
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  private readonly platformId = inject(PLATFORM_ID);
+  private intersectionObserver?: IntersectionObserver;
 
   /** Inyeccion del FormBuilder para construir el formulario de forma fluida */
   private fb = inject(FormBuilder);
@@ -66,6 +70,29 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.intersectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              this.intersectionObserver?.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        this.intersectionObserver!.observe(el);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.intersectionObserver?.disconnect();
   }
 
   /** Construye el FormGroup con todos los campos y sus validaciones */

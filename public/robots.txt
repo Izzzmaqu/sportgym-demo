@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sportgym.cr/sitemap.xml
+Sitemap: https://sportgym-demo.vercel.app/sitemap.xml
