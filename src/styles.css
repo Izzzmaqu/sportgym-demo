@@ -113,6 +113,14 @@ body {
 
   /* Evita scroll horizontal por elementos que se salen del viewport */
   overflow-x: hidden;
+
+  /*
+    overflow-y: scroll fuerza que el scrollbar vertical siempre sea visible.
+    Sin esto, cuando Angular carga el contenido y la pagina se vuelve mas larga
+    que el viewport, el scrollbar aparece y reduce el ancho del viewport ~17px,
+    desplazando todo el layout — esto causa un CLS (Cumulative Layout Shift) alto.
+  */
+  overflow-y: scroll;
 }
 
 /*
