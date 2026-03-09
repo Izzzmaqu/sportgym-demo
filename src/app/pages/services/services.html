@@ -219,15 +219,15 @@
             }
             <!-- Funciones NO incluidas en el plan (aparecen tachadas) -->
             @for (excluded of plan.notIncluded; track excluded) {
-              <li class="flex items-start gap-2 text-sm opacity-40">
+              <li class="flex items-start gap-2 text-sm text-primary-400">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                  class="w-4 h-4 shrink-0 mt-0.5 text-primary-500"
+                  class="w-4 h-4 shrink-0 mt-0.5"
                   aria-hidden="true"
                 >
                   <!-- Icono X para funciones no incluidas -->
                   <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                 </svg>
-                <span class="line-through text-primary-500">{{ excluded }}</span>
+                <span class="line-through">{{ excluded }}</span>
               </li>
             }
           </ul>
@@ -251,7 +251,7 @@
     </div>
 
     <!-- Nota legal pequeña -->
-    <p class="text-center text-primary-600 text-xs mt-8">
+    <p class="text-center text-primary-400 text-xs mt-8">
       * Precios en colones costarricenses (CRC). Membresía mensual con renovacion automatica. Podes cancelar en cualquier momento.
     </p>
   </div>
