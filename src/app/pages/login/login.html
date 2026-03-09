@@ -1,0 +1,192 @@
+<!--
+  LOGIN PAGE TEMPLATE — SportGym Costa Rica
+  ===========================================
+  Formulario de inicio de sesion. Fachada — no autentica usuarios reales.
+-->
+<section class="min-h-screen bg-primary-950 flex items-center justify-center py-16 px-4" aria-labelledby="login-heading">
+  <div class="w-full max-w-md">
+
+    <!-- Logo / Branding -->
+    <div class="text-center mb-8">
+      <a routerLink="/" aria-label="Volver al inicio de SportGym" class="inline-block mb-5">
+        <span class="text-accent-400 text-3xl font-extrabold tracking-tight">Sport<span class="text-white">Gym</span></span>
+      </a>
+      <h1 id="login-heading" class="text-white text-2xl font-bold mb-2">
+        Iniciá sesión
+      </h1>
+      <p class="text-primary-400 text-sm">
+        ¿No tenés cuenta?
+        <a routerLink="/registro" class="text-accent-400 hover:text-accent-300 font-medium transition-colors">
+          Registrate gratis
+        </a>
+      </p>
+    </div>
+
+    <!-- Card del formulario -->
+    <div class="bg-primary-900 rounded-2xl p-7 lg:p-8 ring-1 ring-primary-700/40">
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        aria-label="Formulario de inicio de sesion SportGym"
+        class="space-y-5"
+      >
+
+        <!-- Campo usuario -->
+        <div>
+          <label for="login-usuario" class="block text-sm font-medium text-primary-300 mb-1.5">
+            Usuario o correo electrónico
+          </label>
+          <input
+            id="login-usuario"
+            type="text"
+            formControlName="usuario"
+            autocomplete="username"
+            placeholder="Ingresá tu usuario o correo"
+            class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all duration-200"
+            [class.border-primary-700]="!showError('usuario')"
+            [class.border-red-500]="showError('usuario')"
+            [attr.aria-invalid]="showError('usuario') ? 'true' : null"
+            aria-describedby="login-usuario-error"
+            aria-required="true"
+          />
+          @if (showError('usuario')) {
+            <span id="login-usuario-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block">
+              @if (field('usuario').hasError('required')) { El usuario es requerido. }
+              @else if (field('usuario').hasError('minlength')) { Mínimo 4 caracteres. }
+            </span>
+          } @else {
+            <span id="login-usuario-error" class="sr-only"></span>
+          }
+        </div>
+
+        <!-- Campo contrasena -->
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="login-password" class="text-sm font-medium text-primary-300">
+              Contraseña
+            </label>
+            <!--
+              Enlace "olvidaste la contrasena" — no funcional en esta demo.
+              Se usa tabindex="0" con role="link" para dar contexto accesible.
+            -->
+            <button
+              type="button"
+              class="text-xs text-accent-400 hover:text-accent-300 transition-colors focus:outline-none focus:underline"
+              aria-label="Recuperar contraseña (funcionalidad no disponible en la demo)"
+              (click)="loginError.set('La recuperación de contraseña no está disponible en esta demostración.')"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
+
+          <div class="relative">
+            <input
+              id="login-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              autocomplete="current-password"
+              placeholder="Ingresá tu contraseña"
+              class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 pr-10 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all duration-200"
+              [class.border-primary-700]="!showError('password')"
+              [class.border-red-500]="showError('password')"
+              [attr.aria-invalid]="showError('password') ? 'true' : null"
+              aria-describedby="login-password-error"
+              aria-required="true"
+            />
+            <!-- Toggle mostrar/ocultar contrasena -->
+            <button
+              type="button"
+              (click)="showPassword.set(!showPassword())"
+              class="absolute inset-y-0 right-3 flex items-center text-primary-500 hover:text-primary-300 transition-colors"
+              [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+              [attr.aria-pressed]="showPassword()"
+            >
+              @if (showPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clip-rule="evenodd" />
+                  <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
+                  <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                  <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
+                </svg>
+              }
+            </button>
+          </div>
+
+          @if (showError('password')) {
+            <span id="login-password-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block">
+              @if (field('password').hasError('required')) { La contraseña es requerida. }
+              @else if (field('password').hasError('minlength')) { Mínimo 6 caracteres. }
+            </span>
+          } @else {
+            <span id="login-password-error" class="sr-only"></span>
+          }
+        </div>
+
+        <!--
+          MENSAJE DE ERROR DE LOGIN
+          Se muestra cuando loginError() tiene contenido.
+          role="alert" + aria-live="assertive" para notificacion inmediata en lectores
+        -->
+        @if (loginError()) {
+          <div
+            role="alert"
+            aria-live="assertive"
+            class="flex items-start gap-3 bg-red-900/20 border border-red-700/30 rounded-xl px-4 py-3"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-red-400 shrink-0 mt-0.5" aria-hidden="true">
+              <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+            </svg>
+            <p class="text-red-300 text-sm">{{ loginError() }}</p>
+          </div>
+        }
+
+        <!-- Boton de login -->
+        <button
+          type="submit"
+          class="w-full py-3.5 bg-accent-500 hover:bg-accent-600 disabled:bg-primary-700 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+          [disabled]="isLoading()"
+          [attr.aria-busy]="isLoading()"
+          aria-label="Iniciar sesión en SportGym"
+        >
+          @if (isLoading()) {
+            <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <span>Verificando...</span>
+          } @else {
+            <span>Iniciar sesión</span>
+          }
+        </button>
+
+      </form>
+
+      <!-- Separador -->
+      <div class="flex items-center gap-3 my-5" role="separator" aria-hidden="true">
+        <div class="flex-1 h-px bg-primary-700/50"></div>
+        <span class="text-primary-600 text-xs">o</span>
+        <div class="flex-1 h-px bg-primary-700/50"></div>
+      </div>
+
+      <!-- Acceso rapido al registro -->
+      <a
+        routerLink="/registro"
+        class="w-full py-3 bg-primary-800 hover:bg-primary-700 text-primary-300 hover:text-white text-sm font-medium rounded-xl transition-all duration-200 flex items-center justify-center border border-primary-700/50"
+      >
+        Crear nueva cuenta
+      </a>
+
+    </div>
+
+    <!-- Nota de demo -->
+    <p class="text-center text-primary-600 text-xs mt-5">
+      Este es un proyecto de demostración. No se autentica con ningún servidor real.
+    </p>
+
+  </div>
+</section>

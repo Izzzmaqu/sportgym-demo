@@ -1,13 +1,149 @@
 <!doctype html>
-<html lang="en">
+<!--
+  lang="es": Definimos el idioma principal del sitio en español.
+  Esto es fundamental para accesibilidad (lectores de pantalla) y SEO.
+-->
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>SportgymDemo</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="utf-8" />
+
+  <!--
+    viewport: garantiza que el sitio sea responsive en dispositivos móviles.
+    initial-scale=1 evita zoom automático al rotar pantalla.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!--
+    TÍTULO: Angular sobreescribe este título por ruta usando el campo `title`
+    definido en app.routes.ts. Este es el fallback global.
+  -->
+  <title>SportGym Costa Rica | Forja tu mejor versión</title>
+
+  <!--
+    META DESCRIPTION: Descripción del sitio para motores de búsqueda.
+    Se recomienda entre 150-160 caracteres para que no sea truncada en los resultados.
+  -->
+  <meta
+    name="description"
+    content="SportGym Costa Rica — Tu gimnasio en Barrio Escalante, San José. Zonas de entrenamiento especializadas, instructores certificados y reservaciones en línea."
+  />
+
+  <!-- KEYWORDS (menor peso hoy en día pero aún útil) -->
+  <meta
+    name="keywords"
+    content="gimnasio Costa Rica, SportGym, entrenamiento, zonas deportivas, reservaciones, San José"
+  />
+
+  <!-- AUTOR -->
+  <meta name="author" content="SportGym Costa Rica" />
+
+  <!--
+    ROBOTS: Instruye a los crawlers que indexen la página y sigan los links.
+    En producción se puede cambiar a "index, follow" explícitamente.
+  -->
+  <meta name="robots" content="index, follow" />
+
+  <!-- ═══════════════════════════════════════════
+       OPEN GRAPH — META TAGS PARA REDES SOCIALES
+       Controlan cómo se ve el enlace al compartirlo en Facebook, WhatsApp, etc.
+  ═══════════════════════════════════════════ -->
+  <!-- CANONICAL: URL canónica para evitar contenido duplicado -->
+  <link rel="canonical" href="https://sportgym.cr" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="SportGym Costa Rica | Forja tu mejor versión" />
+  <meta
+    property="og:description"
+    content="Tu gimnasio en Barrio Escalante, San José. Zonas especializadas, instructores certificados y reservaciones en línea."
+  />
+  <meta property="og:url" content="https://sportgym.cr" />
+  <meta property="og:locale" content="es_CR" />
+  <meta property="og:site_name" content="SportGym Costa Rica" />
+  <meta property="og:image" content="https://sportgym.cr/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="SportGym Costa Rica — Forja tu mejor versión" />
+
+  <!-- TWITTER CARD: Cómo se ve en Twitter/X al compartir -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SportGym Costa Rica | Forja tu mejor versión" />
+  <meta
+    name="twitter:description"
+    content="Tu gimnasio en Barrio Escalante, San José. Reserva tu zona de entrenamiento."
+  />
+  <meta name="twitter:image" content="https://sportgym.cr/og-image.jpg" />
+  <meta name="twitter:image:alt" content="SportGym Costa Rica — Forja tu mejor versión" />
+
+  <!--
+    BASE HREF: Define la ruta base para el router de Angular.
+    Necesario para que las rutas funcionen correctamente cuando el sitio
+    se sirve desde un subdirectorio.
+  -->
+  <base href="/" />
+
+  <!-- ═══════════════════════════════════════════
+       JSON-LD — STRUCTURED DATA (Google Rich Results)
+       Le dice a Google que esto es un negocio local con horarios,
+       dirección y contacto. Puede aparecer en Knowledge Panel.
+  ═══════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthClub",
+    "name": "SportGym Costa Rica",
+    "description": "Gimnasio en Barrio Escalante con zonas de entrenamiento especializadas, instructores certificados y reservaciones en línea.",
+    "url": "https://sportgym.cr",
+    "logo": "https://sportgym.cr/favicon.ico",
+    "image": "https://sportgym.cr/og-image.jpg",
+    "telephone": "+50622564890",
+    "email": "info@sportgym.cr",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "150 metros norte del Parque España",
+      "addressLocality": "Barrio Escalante, San José",
+      "addressCountry": "CR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 9.9366,
+      "longitude": -84.0717
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "05:00", "closes": "22:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "06:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "07:00", "closes": "14:00" }
+    ],
+    "sameAs": []
+  }
+  </script>
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+  <!--
+    PRECONNECT a Google Fonts:
+    Establece la conexión DNS/TCP antes de que el navegador necesite
+    los recursos, reduciendo la latencia al cargar la fuente Inter.
+    crossorigin es necesario porque las fuentes se cargan con CORS.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!--
+    FUENTE INTER: Cargamos los pesos 400 (regular), 500 (medium) y 700 (bold).
+    display=swap: muestra texto con fuente del sistema mientras carga Inter,
+    evitando el "flash of invisible text" (FOIT) — mejora percepción de velocidad.
+  -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
 </head>
-<body>
+<body class="bg-gray-950 text-white antialiased">
+  <!--
+    app-root: Punto de entrada principal de Angular.
+    Angular inyecta aquí toda la aplicación al hacer bootstrap.
+  -->
   <app-root></app-root>
 </body>
 </html>

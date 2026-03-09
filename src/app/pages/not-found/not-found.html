@@ -1,0 +1,66 @@
+<!--
+  NOT FOUND (404) PAGE — SportGym Costa Rica
+  =============================================
+  Pagina de error 404 personalizada con el branding del gimnasio.
+  Se muestra cuando el usuario accede a una URL inexistente.
+-->
+<section
+  class="min-h-screen bg-primary-950 flex items-center justify-center py-16 px-4"
+  aria-labelledby="not-found-heading"
+>
+  <div class="text-center max-w-lg">
+
+    <!-- Numero "404" decorativo -->
+    <div aria-hidden="true" class="mb-6 select-none">
+      <span
+        class="text-[9rem] lg:text-[12rem] font-extrabold leading-none"
+        style="background: linear-gradient(135deg, #f97316 0%, #7c2d12 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+      >
+        404
+      </span>
+    </div>
+
+    <!-- Titulo semantico (h1) -->
+    <h1 id="not-found-heading" class="text-white text-3xl lg:text-4xl font-bold mb-4">
+      Pagina no encontrada
+    </h1>
+
+    <!-- Descripcion -->
+    <p class="text-primary-400 text-base mb-8 leading-relaxed">
+      La pagina que buscas no existe o fue movida.<br />
+      ¡Pero no te rindas! Todavia podes seguir entrenando.
+    </p>
+
+    <!-- Acciones -->
+    <div class="flex flex-wrap justify-center gap-4">
+      <a
+        routerLink="/"
+        class="px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-2"
+        aria-label="Volver al inicio de SportGym"
+      >
+        <!-- Icono de casa -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
+          <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" />
+        </svg>
+        Volver al inicio
+      </a>
+
+      <a
+        routerLink="/servicios"
+        class="px-6 py-3 bg-primary-800 hover:bg-primary-700 text-white font-semibold rounded-xl transition-all duration-200 border border-primary-700"
+        aria-label="Ver los servicios de SportGym"
+      >
+        Ver servicios
+      </a>
+    </div>
+
+    <!-- Link discreto de contacto -->
+    <p class="text-primary-600 text-sm mt-8">
+      ¿necesitas ayuda?
+      <a routerLink="/contacto" class="text-accent-400 hover:text-accent-300 transition-colors">
+        Contáctenos
+      </a>
+    </p>
+
+  </div>
+</section>

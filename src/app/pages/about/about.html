@@ -1,0 +1,241 @@
+<!--
+  ABOUT PAGE TEMPLATE — SportGym Costa Rica
+  ===========================================
+  Pagina "Acerca de nosotros" con la identidad corporativa del gimnasio.
+-->
+
+<!-- ============================================================
+     HERO DE LA PAGINA
+     ============================================================ -->
+<section
+  class="relative bg-primary-950 py-20 lg:py-32 overflow-hidden"
+  aria-labelledby="about-hero-heading"
+>
+  <!--
+    Imagen de fondo decorativa (semi-transparente).
+    aria-hidden: No aporta informacion, es puramente visual.
+  -->
+  <div class="absolute inset-0 opacity-10" aria-hidden="true">
+    <img
+      src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=60&fit=crop"
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div class="absolute inset-0 bg-linear-to-b from-primary-950/50 to-primary-950" aria-hidden="true"></div>
+
+  <div class="container-gym relative text-center">
+    <p class="text-accent-400 text-sm font-semibold uppercase tracking-widest mb-4">
+      Conocenos
+    </p>
+    <h1 id="about-hero-heading" class="text-white text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+      Acerca de <span class="text-accent-400">SportGym</span>
+    </h1>
+    <p class="text-primary-300 text-lg max-w-2xl mx-auto leading-relaxed">
+      {{ gymInfo.description }}
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     HISTORIA DEL GIMNASIO
+     ============================================================ -->
+<section class="bg-primary-900 py-16 lg:py-24" aria-labelledby="history-heading">
+  <div class="container-gym">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Imagen -->
+      <div class="animate-on-scroll">
+        <img
+          src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80&fit=crop"
+          alt="Interior del gimnasio SportGym Costa Rica con equipos modernos de entrenamiento"
+          class="rounded-2xl w-full object-cover shadow-2xl shadow-black/40"
+          style="aspect-ratio: 4/3"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Texto de historia -->
+      <div class="animate-on-scroll animate-delay-200">
+        <p class="text-accent-400 text-sm font-semibold uppercase tracking-widest mb-3">
+          Nuestra historia
+        </p>
+        <h2 id="history-heading" class="text-white text-3xl lg:text-4xl font-bold mb-6">
+          Más de una década <br /><span class="text-accent-400">transformando vidas</span>
+        </h2>
+        <p class="text-primary-300 leading-relaxed text-base lg:text-lg">
+          {{ identity.history }}
+        </p>
+
+        <!-- Estadisticas rapidas -->
+        <div class="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-primary-700/50">
+          @for (stat of gymInfo.stats.slice(0, 3); track stat.label) {
+            <div class="text-center">
+              <div class="text-accent-400 text-2xl font-bold mb-1">{{ stat.value }}</div>
+              <div class="text-primary-400 text-xs">{{ stat.label }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MISION Y VISION
+     ============================================================ -->
+<section class="bg-primary-800 py-16 lg:py-24" aria-labelledby="mission-vision-heading">
+  <div class="container-gym">
+
+    <div class="text-center mb-12 animate-on-scroll">
+      <h2 id="mission-vision-heading" class="text-white text-3xl lg:text-4xl font-bold mb-4">
+        Mision y <span class="text-accent-400">Vision</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+
+      <!-- MISION -->
+      <div class="bg-primary-900 rounded-2xl p-8 border border-primary-700/40 hover:border-accent-500/30 transition-all duration-300 animate-on-scroll">
+        <div class="w-12 h-12 bg-accent-500/10 rounded-xl flex items-center justify-center mb-6" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-accent-400" aria-hidden="true">
+            <!--
+              Icono de diana/objetivo (representa "mision": objetivo a cumplir).
+            -->
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+          </svg>
+        </div>
+        <h3 class="text-white text-xl font-bold mb-4">Nuestra Misión</h3>
+        <p class="text-primary-300 leading-relaxed text-sm">
+          {{ identity.mission }}
+        </p>
+      </div>
+
+      <!-- VISION -->
+      <div class="bg-primary-900 rounded-2xl p-8 border border-primary-700/40 hover:border-accent-500/30 transition-all duration-300 animate-on-scroll animate-delay-200">
+        <div class="w-12 h-12 bg-accent-500/10 rounded-xl flex items-center justify-center mb-6" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-accent-400" aria-hidden="true">
+            <!-- Icono de ojo (representa "vision": mirar hacia el futuro) -->
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+        </div>
+        <h3 class="text-white text-xl font-bold mb-4">Nuestra Visión</h3>
+        <p class="text-primary-300 leading-relaxed text-sm">
+          {{ identity.vision }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VALORES CORPORATIVOS
+     ============================================================ -->
+<section class="bg-primary-900 py-16 lg:py-24" aria-labelledby="values-heading">
+  <div class="container-gym">
+
+    <div class="text-center mb-12 animate-on-scroll">
+      <p class="text-accent-400 text-sm font-semibold uppercase tracking-widest mb-3">
+        Lo que nos define
+      </p>
+      <h2 id="values-heading" class="text-white text-3xl lg:text-4xl font-bold">
+        Nuestros <span class="text-accent-400">valores</span>
+      </h2>
+    </div>
+
+    <!-- Grid responsive de valores: 1 col mobile, 2 col tablet, 3-5 en desktop -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      @for (value of identity.values; track value.id; let i = $index) {
+        <div
+          class="bg-primary-800 rounded-2xl p-6 text-center hover:ring-1 hover:ring-accent-500/30 hover:-translate-y-1 transition-all duration-300 group animate-on-scroll"
+          [class.animate-delay-100]="i === 1"
+          [class.animate-delay-200]="i === 2"
+          [class.animate-delay-300]="i === 3"
+          [class.animate-delay-400]="i === 4"
+        >
+          <!--
+            Icono del valor. Usamos [innerHTML] para insertar el path SVG
+            que viene como string desde gym.data.ts.
+            SEGURIDAD: [innerHTML] con DomSanitizer en Angular limpia HTML
+            automaticamente. Sin embargo, los paths SVG en gym.data.ts son
+            constantes del codigo (no vienen del usuario), por lo que es seguro.
+            El contenido viene del mismo archivo gym.data.ts compilado, no de
+            ningun input del usuario.
+          -->
+          <div class="w-12 h-12 bg-accent-500/10 rounded-xl flex items-center justify-center mb-4 mx-auto group-hover:bg-accent-500/20 transition-colors duration-300" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-accent-400"
+              aria-hidden="true"
+              [innerHTML]="value.icon"
+            ></svg>
+          </div>
+          <h3 class="text-white font-bold text-base mb-2">{{ value.title }}</h3>
+          <p class="text-primary-400 text-xs leading-relaxed">{{ value.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EQUIPO HUMANO
+     ============================================================ -->
+<section class="bg-primary-800 py-16 lg:py-24" aria-labelledby="team-heading">
+  <div class="container-gym">
+
+    <div class="text-center mb-12 animate-on-scroll">
+      <p class="text-accent-400 text-sm font-semibold uppercase tracking-widest mb-3">
+        El equipo
+      </p>
+      <h2 id="team-heading" class="text-white text-3xl lg:text-4xl font-bold">
+        Quienes nos <span class="text-accent-400">lideran</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+      @for (member of identity.team; track member.name; let i = $index) {
+        <div
+          class="text-center animate-on-scroll"
+          [class.animate-delay-100]="i === 1"
+          [class.animate-delay-200]="i === 2"
+        >
+          <img
+            [src]="member.image"
+            [alt]="member.name + ', ' + member.role + ' en SportGym Costa Rica'"
+            class="w-24 h-24 rounded-2xl object-cover mx-auto mb-4 ring-2 ring-primary-700"
+            loading="lazy"
+          />
+          <h3 class="text-white font-bold text-base mb-1">{{ member.name }}</h3>
+          <p class="text-accent-400 text-sm font-medium mb-2">{{ member.role }}</p>
+          <p class="text-primary-400 text-xs">{{ member.certifications }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA al final -->
+<section class="bg-primary-950 py-14" aria-labelledby="about-cta-heading">
+  <div class="container-gym text-center">
+    <h2 id="about-cta-heading" class="text-white text-2xl font-bold mb-4">
+      ¿Listo para unirte a la familia SportGym?
+    </h2>
+    <p class="text-primary-400 mb-6">
+      Registrate hoy y comenza tu transformacion con el respaldo de nuestro equipo.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a routerLink="/registro" class="px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5">
+        Crear mi cuenta
+      </a>
+      <a routerLink="/contacto" class="px-6 py-3 bg-primary-800 hover:bg-primary-700 text-white font-semibold rounded-xl transition-all duration-200 border border-primary-600">
+        Contáctenos
+      </a>
+    </div>
+  </div>
+</section>

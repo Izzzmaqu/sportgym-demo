@@ -1,0 +1,135 @@
+<!--
+  WHATSAPP FLOATING BUTTON TEMPLATE
+  ===================================
+  Boton flotante de WhatsApp posicionado de forma fija en la
+  esquina inferior derecha de la pantalla.
+
+  ESTRUCTURA:
+  <div> (contenedor posicionado)
+    ├── Anillo de pulso animado (decorativo)
+    ├── <a> (link al WhatsApp)
+    │   └── SVG del logo de WhatsApp
+    └── Tooltip (aparece al hover)
+
+  NOTAS DE ACCESIBILIDAD:
+  - El <a> tiene aria-label completo con el numero de telefono
+  - El SVG del icono tiene aria-hidden="true" (decorativo)
+  - El anillo de pulso tiene aria-hidden="true" (decorativo)
+  - El tooltip tiene role="tooltip" y esta vinculado al boton con aria-describedby
+-->
+
+<!--
+  Contenedor del boton flotante.
+  fixed: posicion fija respecto al viewport (no desaparece al hacer scroll).
+  bottom-6 right-6: 24px desde el borde inferior y derecho.
+  z-50: Encima de casi todo el contenido pero debajo de modales criticos.
+  group: Clase de Tailwind necesaria para que los hijos puedan usar group-hover.
+-->
+<div
+  class="fixed bottom-6 right-6 z-50"
+  (mouseenter)="showTooltip()"
+  (mouseleave)="hideTooltip()"
+>
+  <!--
+    ANILLO DE PULSO
+    Circulo verde que crece y desaparece en loop para llamar la atencion.
+    absolute: posicionado relativo al contenedor padre.
+    inset-0: ocupa exactamente el mismo espacio que el boton.
+    animate-[pulseRing_2s_ease-out_infinite]: Aplica la animacion pulseRing
+    definida en styles.css con duracion de 2s, repitiendo indefinidamente.
+
+    aria-hidden="true": No aporta informacion, es puramente visual/decorativo.
+    El boton ya tiene aria-label descriptivo.
+  -->
+  <span
+    class="absolute inset-0 rounded-full bg-green-500/40 animate-[pulseRing_2s_ease-out_infinite]"
+    aria-hidden="true"
+  ></span>
+
+  <!--
+    TOOLTIP
+    Aparece a la izquierda del boton al hacer hover/focus.
+    @if: Solo se renderiza en DOM si tooltipVisible() es true.
+    Esto es mas eficiente que usar display:none (remueve el elemento del DOM).
+
+    role="tooltip": Semanticamente identifica este elemento como tooltip.
+    El aria-describedby en el boton apunta al id="wa-tooltip".
+  -->
+  @if (tooltipVisible()) {
+    <div
+      id="wa-tooltip"
+      role="tooltip"
+      class="absolute right-16 bottom-1/2 translate-y-1/2 bg-gray-900 text-white text-sm font-medium px-3 py-2 rounded-lg whitespace-nowrap shadow-xl border border-primary-700/50"
+      style="animation: fadeIn 0.15s ease forwards"
+    >
+      <!-- Texto principal del tooltip -->
+      <span class="text-white">¡Escríbenos!</span>
+      <!-- Numero de telefono en tono mas tenue -->
+      <span class="block text-xs text-primary-400 mt-0.5">{{ phoneDisplay }}</span>
+      <!--
+        Flecha decorativa que apunta al boton.
+        Es un triangulo hecho con borders CSS (tecnica clasica).
+        aria-hidden: puramente decorativo.
+      -->
+      <span
+        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full border-8 border-transparent border-l-gray-900"
+        aria-hidden="true"
+      ></span>
+    </div>
+  }
+
+  <!--
+    BOTON PRINCIPAL DE WHATSAPP
+    ============================
+    Es un <a> (link) no un <button>, porque navega a una URL externa.
+    Los <button> son para acciones dentro de la pagina; los <a> para navegacion.
+
+    href: URL de WhatsApp con numero y mensaje pre-llenado.
+    target="_blank": Abre en nueva pestaña (no queremos que salgan del sitio).
+    rel="noopener noreferrer":
+      - noopener: Previene que la nueva pestaña acceda a window.opener
+                  (proteccion contra tabnapping / redirecciones maliciosas)
+      - noreferrer: No envia el header HTTP Referer a WhatsApp
+                    (mayor privacidad del usuario)
+
+    aria-label: Descripcion completa para lectores de pantalla.
+                Incluye el numero y que abre en nueva pestaña.
+    aria-describedby="wa-tooltip": Vincula el boton con el tooltip
+                cuando este es visible.
+
+    Clases de estilo:
+    - w-14 h-14: 56px x 56px (tamano estandar para botones flotantes)
+    - bg-green-500: Color verde oficial de WhatsApp
+    - rounded-full: Completamente circular
+    - shadow-xl shadow-green-500/40: Sombra con color verde para profundidad
+    - hover:-translate-y-1: Sube 4px al hover (feedback visual sutil)
+    - hover:shadow-green-500/60: Intensifica la sombra al hover
+  -->
+  <a
+    [href]="whatsappUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="relative flex items-center justify-center w-14 h-14 bg-green-500 hover:bg-green-400 rounded-full shadow-xl shadow-green-500/40 hover:shadow-green-500/60 hover:-translate-y-1 transition-all duration-200"
+    aria-label="Contactar SportGym por WhatsApp al {{ phoneDisplay }} (abre en nueva pestaña)"
+    [attr.aria-describedby]="tooltipVisible() ? 'wa-tooltip' : null"
+  >
+    <!--
+      LOGO DE WHATSAPP (SVG oficial de WhatsApp)
+      aria-hidden="true": El aria-label del <a> padre ya describe la accion.
+      El SVG es decorativo en este contexto.
+    -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      class="w-7 h-7 text-white"
+      aria-hidden="true"
+    >
+      <!--
+        Path oficial del logo de WhatsApp.
+        Fuente: Simple Icons (simpleicons.org), licencia CC0.
+      -->
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
+</div>

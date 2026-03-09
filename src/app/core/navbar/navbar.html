@@ -1,0 +1,273 @@
+<!--
+  NAVBAR TEMPLATE — SportGym Costa Rica
+  =======================================
+  Template HTML del componente de navegacion.
+
+  ESTRUCTURA:
+  <header> (contenedor principal con role="banner")
+    ├── .skip-to-content (link de accesibilidad, invisible hasta focus)
+    ├── <nav> (contenedor de navegacion)
+    │   ├── Logo + Nombre (link a /)
+    │   ├── Links desktop (hidden en mobile, visible en lg+)
+    │   ├── Botones CTA desktop
+    │   └── Boton hamburguesa (solo visible en mobile)
+    └── Menu mobile (drawer que aparece/desaparece)
+
+  ACCESIBILIDAD:
+  - role="banner": Identifica el header como el banner principal del sitio
+  - role="navigation": Identifica el <nav> como region de navegacion
+  - aria-label: Diferencia el nav principal del nav mobile
+  - aria-expanded: Informa estado del menu hamburguesa a lectores de pantalla
+  - aria-controls: Vincula el boton hamburguesa con el id del menu que controla
+  - aria-current="page": Marcado por RouterLinkActive en el link activo
+  - aria-hidden="true": En iconos SVG decorativos que no aportan informacion
+-->
+
+<!--
+  SKIP TO CONTENT LINK
+  Link oculto que aparece solo cuando recibe focus (teclado).
+  Redirige al #main-content para saltar el navbar.
+  Requisito WCAG 2.1 criterio 2.4.1 Nivel A.
+-->
+<a href="#main-content" class="skip-to-content">
+  Saltar al contenido principal
+</a>
+
+<!--
+  <header role="banner">:
+  El elemento header con role="banner" identifica al lector de pantalla
+  que este es el encabezado principal del sitio (hay uno por pagina).
+
+  Clases dinamicas con signal:
+  - Si isScrolled() es true: fondo solido + sombra
+  - Si es false: fondo semi-transparente con backdrop-blur
+
+  position: fixed -> El navbar permanece visible al hacer scroll.
+  z-50 -> Encima de todo el contenido de la pagina.
+  transition-all: Transicion suave entre los estados de fondo.
+-->
+<header
+  role="banner"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  [class.bg-primary-900]="isScrolled()"
+  [class.shadow-lg]="isScrolled()"
+  [class.shadow-black\/50]="isScrolled()"
+  [class.bg-primary-950\/80]="!isScrolled()"
+  [class.backdrop-blur-md]="!isScrolled()"
+>
+  <!--
+    <nav role="navigation">:
+    Elemento de navegacion principal.
+    aria-label="Navegación principal" diferencia este nav del mobile
+    cuando hay multiples elementos <nav> en la pagina.
+  -->
+  <nav
+    role="navigation"
+    aria-label="Navegación principal"
+    class="container-gym flex items-center justify-between h-16 lg:h-20"
+  >
+    <!-- ============================================================
+         LOGO Y NOMBRE DEL GIMNASIO
+         ============================================================ -->
+    <!--
+      routerLink="/": Navega a la pagina principal.
+      aria-label: Describe el link para lectores de pantalla
+      (el usuario no ve el alt del logo sino el texto, pero el aria-label
+      provee contexto adicional)
+    -->
+    <a
+      routerLink="/"
+      class="flex items-center gap-3 group"
+      aria-label="SportGym Costa Rica - Ir a página de inicio"
+      (click)="closeMobileMenu()"
+    >
+      <!--
+        LOGO SVG INLINE:
+        Usamos SVG inline (no imagen externa) por:
+        1. No requiere peticion HTTP extra -> carga mas rapida
+        2. Se puede colorear con CSS (currentColor se hereda)
+        3. Escala perfectamente a cualquier tamano
+
+        aria-hidden="true": El SVG es decorativo; el aria-label del <a>
+        ya provee la descripcion completa.
+        role="img" + aria-label alternativo si fuera standalone:
+        aria-hidden="true" es suficiente pues esta dentro de un link con label.
+      -->
+      <div class="w-9 h-9 lg:w-11 lg:h-11 bg-accent-500 rounded-xl flex items-center justify-center group-hover:bg-accent-400 transition-colors duration-200" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 lg:w-6 lg:h-6 text-white" aria-hidden="true">
+          <!-- Icono de mancuerna / dumbbell representando el gimnasio -->
+          <path d="M6.5 6.5h11M6.5 17.5h11M4 9.5v5M8 8v8M16 8v8M20 9.5v5"/>
+        </svg>
+      </div>
+      <div class="flex flex-col leading-tight">
+        <span class="text-white font-bold text-lg lg:text-xl tracking-tight group-hover:text-accent-400 transition-colors duration-200">
+          SportGym
+        </span>
+        <span class="text-primary-400 text-xs font-medium tracking-wide uppercase hidden sm:block">
+          Costa Rica
+        </span>
+      </div>
+    </a>
+
+    <!-- ============================================================
+         LINKS DE NAVEGACION — DESKTOP
+         Visibles solo en pantallas lg (1024px+).
+         En mobile se ocultan y aparecen en el drawer.
+         ============================================================ -->
+    <ul
+      class="hidden lg:flex items-center gap-1"
+      role="list"
+    >
+      <!--
+        @for: Directiva de control de flujo de Angular 17+ (reemplaza *ngFor).
+        track link.path: Clave unica para que Angular optimice el re-renderizado.
+        Es mas eficiente que track $index porque identifica cada elemento por su valor
+        unico, no por posicion.
+      -->
+      @for (link of navLinks; track link.path) {
+        <li>
+          <!--
+            routerLinkActive: Agrega la clase CSS cuando la ruta esta activa.
+            [routerLinkActiveOptions]="{ exact: link.exact }":
+            exact=true -> solo activa si la URL coincide EXACTAMENTE (ideal para '/')
+            exact=false -> activa si la URL EMPIEZA con el path (ideal para sub-rutas)
+
+            aria-current: RouterLinkActive tambien puede bindear aria-current
+            automaticamente con [ariaCurrentWhenActive]="'page'" para indicar
+            al lector de pantalla que este es el link de la pagina actual.
+          -->
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="text-accent-400 font-semibold"
+            [routerLinkActiveOptions]="{ exact: link.exact }"
+            [ariaCurrentWhenActive]="'page'"
+            class="px-3 py-2 text-sm font-medium text-primary-200 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200 inline-block"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- ============================================================
+         BOTONES CTA — DESKTOP
+         ============================================================ -->
+    <div class="hidden lg:flex items-center gap-3">
+      <a
+        routerLink="/login"
+        class="px-4 py-2 text-sm font-medium text-primary-200 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200"
+      >
+        Iniciar sesión
+      </a>
+      <a
+        routerLink="/registro"
+        class="px-4 py-2 text-sm font-semibold bg-accent-500 hover:bg-accent-600 text-white rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-accent-500/25 hover:-translate-y-0.5"
+      >
+        Registrarse
+      </a>
+    </div>
+
+    <!-- ============================================================
+         BOTON HAMBURGUESA — SOLO MOBILE
+         ============================================================ -->
+    <!--
+      Solo visible en pantallas menores a lg.
+      aria-expanded: Informa si el menu esta abierto (true) o cerrado (false).
+               Los lectores de pantalla anuncian este cambio al usuario.
+      aria-controls: Vincula este boton con el drawer del menu (id="mobile-menu").
+               El lector de pantalla sabe que este boton controla ese elemento.
+      aria-label: Describe la accion del boton de forma dinamica.
+    -->
+    <button
+      type="button"
+      class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-primary-200 hover:text-white hover:bg-white/5 transition-all duration-200"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      aria-controls="mobile-menu"
+      [attr.aria-label]="mobileMenuOpen() ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'"
+      (click)="toggleMobileMenu()"
+    >
+      <!--
+        Mostramos un icono diferente segun el estado del menu:
+        - Menu cerrado: 3 lineas horizontales (hamburguesa)
+        - Menu abierto: X (cerrar)
+        @if/@else: Control de flujo moderno de Angular 17+
+      -->
+      @if (!mobileMenuOpen()) {
+        <!-- Icono hamburguesa -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      } @else {
+        <!-- Icono X para cerrar -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      }
+    </button>
+  </nav>
+
+  <!-- ============================================================
+       MENU MOBILE (DRAWER)
+       Aparece debajo del navbar cuando mobileMenuOpen() es true.
+       ============================================================ -->
+  <!--
+    id="mobile-menu": Coincide con aria-controls del boton hamburguesa.
+    role="navigation" + aria-label: Identifica esta region de navegacion.
+    @if: Solo se renderiza en el DOM cuando esta abierto
+         (no solo oculto con display:none, lo remueve del DOM).
+  -->
+  @if (mobileMenuOpen()) {
+    <div
+      id="mobile-menu"
+      role="navigation"
+      aria-label="Menú de navegación móvil"
+      class="lg:hidden bg-primary-950/95 backdrop-blur-md border-t border-primary-700/50"
+      style="animation: slideDown 0.25s ease forwards"
+    >
+      <div class="container-gym py-4 flex flex-col gap-1">
+        <!-- Links de navegacion mobile -->
+        @for (link of navLinks; track link.path) {
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="text-accent-400 bg-accent-500/10 font-semibold"
+            [routerLinkActiveOptions]="{ exact: link.exact }"
+            [ariaCurrentWhenActive]="'page'"
+            class="px-4 py-3 text-base font-medium text-primary-200 hover:text-white rounded-xl hover:bg-white/5 transition-all duration-200 flex items-center gap-2"
+            (click)="closeMobileMenu()"
+          >
+            {{ link.label }}
+          </a>
+        }
+
+        <!-- Separador visual -->
+        <div class="my-2 border-t border-primary-700/50" aria-hidden="true"></div>
+
+        <!-- Botones CTA mobile -->
+        <a
+          routerLink="/login"
+          class="px-4 py-3 text-base font-medium text-primary-200 hover:text-white rounded-xl hover:bg-white/5 transition-all duration-200"
+          (click)="closeMobileMenu()"
+        >
+          Iniciar sesión
+        </a>
+        <a
+          routerLink="/registro"
+          class="px-4 py-3 text-base font-semibold bg-accent-500 hover:bg-accent-600 text-white rounded-xl transition-all duration-200 text-center mt-1"
+          (click)="closeMobileMenu()"
+        >
+          Registrarse gratis
+        </a>
+      </div>
+    </div>
+  }
+</header>
+
+<!--
+  ESPACIADOR:
+  Como el navbar es "fixed" (fuera del flujo del documento),
+  el contenido siguiente empieza desde la parte superior de la pantalla
+  y queda "debajo" del navbar. Este div empuja el contenido hacia abajo
+  exactamente la altura del navbar para que no quede oculto.
+  h-16 = 64px (altura en mobile), lg:h-20 = 80px (altura en desktop).
+-->
+<div class="h-16 lg:h-20" aria-hidden="true"></div>

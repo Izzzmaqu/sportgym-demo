@@ -1,3 +1,360 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+  ============================================================
+  ESTILOS GLOBALES — SportGym Costa Rica
+  ============================================================
 
+  Este archivo define:
+  1. La importacion de Tailwind CSS v4
+  2. El @theme personalizado (variables de diseno del gimnasio)
+  3. Estilos base globales
+  4. Keyframes para animaciones sutiles
+  5. Utilidades de accesibilidad
+  ============================================================
+*/
+
+/* Importamos Tailwind CSS v4. En v4 ya no se usa tailwind.config.js;
+   toda la configuracion del tema se hace con @theme directamente en CSS. */
 @import 'tailwindcss';
+
+/*
+  ============================================================
+  @THEME — SISTEMA DE DISENO PERSONALIZADO
+  ============================================================
+  Tailwind v4 lee estas variables CSS y las expone como clases
+  utilitarias. Por ejemplo: --color-primary-900 se convierte en
+  bg-primary-900, text-primary-900, border-primary-900, etc.
+  ============================================================
+*/
+@theme {
+  /*
+    PALETA DE COLORES
+    Usamos una escala oscura como base (tipo charcoal/slate)
+    con naranja energetico como color de accion/acento.
+    Esta combinacion da un look moderno, energico y profesional
+    tipico de marcas deportivas premium.
+  */
+
+  /* ------ PRIMARIOS (fondo oscuro del sitio) ------ */
+  --color-primary-950: #020617; /* Fondo mas oscuro, casi negro */
+  --color-primary-900: #0f172a; /* Fondo principal de secciones */
+  --color-primary-800: #1e293b; /* Fondo alterno de secciones */
+  --color-primary-700: #334155; /* Bordes, separadores */
+  --color-primary-600: #475569; /* Texto secundario oscuro */
+  --color-primary-400: #94a3b8; /* Texto auxiliar / placeholders */
+  --color-primary-200: #e2e8f0; /* Texto claro sobre fondos oscuros */
+  --color-primary-50:  #f8fafc; /* Blanco ligeramente calido */
+
+  /* ------ ACENTO (naranja energetico SportGym) ------ */
+  --color-accent-600: #c2410c; /* Hover oscuro del acento */
+  --color-accent-500: #ea580c; /* Acento principal (botones, links activos) */
+  --color-accent-400: #f97316; /* Acento brillante (iconos, highlights) */
+  --color-accent-300: #fb923c; /* Acento claro */
+  --color-accent-100: #ffedd5; /* Fondo muy claro del acento */
+
+  /*
+    TIPOGRAFIA
+    Inter es una fuente sans-serif disenada para interfaces digitales.
+    Excelente legibilidad en pantallas pequeñas y grandes.
+    El stack de fallback garantiza que siempre haya una fuente disponible.
+  */
+  --font-family-sans: 'Inter', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /*
+    SPACING Y RADIOS
+    Extendemos los valores default de Tailwind con nuestros custom.
+  */
+  --radius-xl:  0.875rem;
+  --radius-2xl: 1.25rem;
+
+  /*
+    TRANSICIONES
+    Duraciones estandar para que las animaciones sean consistentes
+    en todo el sitio.
+  */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+}
+
+/*
+  ============================================================
+  ESTILOS BASE GLOBALES
+  ============================================================
+  Aplicamos configuraciones base al body y elementos HTML
+  para garantizar consistencia visual en todos los navegadores.
+  ============================================================
+*/
+
+/* scroll-behavior: smooth — al hacer clic en links de ancla (#section)
+   el desplazamiento es suave en lugar de un salto brusco.
+   prefers-reduced-motion: desactivamos esto si el usuario prefiere menos movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  /*
+    Tipografia base del sitio. font-feature-settings mejora la
+    legibilidad activando ligaturas y kerning de Inter.
+  */
+  font-family: var(--font-family-sans);
+  font-feature-settings: 'liga' 1, 'kern' 1;
+
+  /* Antialiasing: texto mas suave, especialmente en macOS/retina */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Color de fondo y texto predeterminados del sitio */
+  background-color: var(--color-primary-900);
+  color: var(--color-primary-200);
+
+  /* Evita scroll horizontal por elementos que se salen del viewport */
+  overflow-x: hidden;
+}
+
+/*
+  Todos los elementos usan box-sizing: border-box.
+  Esto hace que padding y border esten incluidos en el width/height
+  declarado, evitando calculos complicados de layout.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/*
+  FOCUS VISIBLE — ACCESIBILIDAD
+  Muestra un outline claro cuando el usuario navega con teclado.
+  :focus-visible solo se activa con teclado/teclado virtual,
+  NO con clicks del mouse, lo que evita el outline molesto en uso normal
+  pero lo mantiene visible para usuarios que navegan por teclado.
+*/
+:focus-visible {
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/*
+  ============================================================
+  KEYFRAMES — ANIMACIONES PERSONALIZADAS
+  ============================================================
+  Definimos aqui todas las animaciones del sitio para tener
+  un unico lugar de control y consistencia.
+  Cada animacion esta envuelta en prefers-reduced-motion para
+  respetar las preferencias del usuario (accesibilidad).
+  ============================================================
+*/
+
+/*
+  @media prefers-reduced-motion: no-preference
+  Solo ejecuta animaciones si el usuario NO ha pedido reducirlas.
+  Es un requisito WCAG para usuarios con epilepsia o sensibilidad al movimiento.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  /*
+    FADE-IN-UP: el elemento aparece desde abajo con opacidad 0 -> 1.
+    Se usa en cards y secciones al entrar al viewport (Intersection Observer).
+    translateY(20px) -> translateY(0) da un movimiento suave sin ser exagerado.
+  */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /*
+    FADE-IN: aparece con opacidad 0 -> 1 sin movimiento.
+    Se usa en overlays, modales y el hero.
+  */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /*
+    SLIDE-DOWN: el navbar dropdown mobile cae desde arriba.
+    max-height trick: usamos max-height en lugar de height porque
+    height: auto no puede animarse con CSS transitions.
+  */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /*
+    PULSE-RING: el anillo que rodea el boton de WhatsApp.
+    Escala de 1 a 1.4 con opacidad 0 -> 0 para crear el
+    efecto de onda expansiva (como un ping).
+  */
+  @keyframes pulseRing {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  /*
+    HERO-ZOOM: zoom muy leve en la imagen del hero al cargar.
+    1.05 -> 1.0 da una sensacion de entrada cinematografica sutil.
+  */
+  @keyframes heroZoom {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1.0); }
+  }
+}
+
+/*
+  ============================================================
+  CLASES DE ANIMACION REUTILIZABLES
+  ============================================================
+  Las usamos directamente en el HTML con clase CSS, no con
+  @apply de Tailwind, para mayor claridad y control.
+  ============================================================
+*/
+
+/* Clase base para elementos que se animaran al entrar al viewport.
+   Inicialmente invisibles, el Intersection Observer les agrega
+   la clase .animate-visible cuando el elemento es visible. */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* Estado final de la animacion: el elemento es visible */
+.animate-on-scroll.is-visible {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Variante con delay para animar elementos en secuencia (stagger) */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+
+/*
+  prefers-reduced-motion: Si el usuario prefiere menos movimiento,
+  mostramos los elementos directamente sin animacion.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+  .animate-on-scroll.is-visible {
+    animation: none;
+  }
+}
+
+/*
+  ============================================================
+  SKIP TO CONTENT — ACCESIBILIDAD
+  ============================================================
+  Link invisible que aparece al hacer focus con teclado.
+  Permite a usuarios de teclado/lectores de pantalla saltar
+  directamente al contenido principal, sin tener que navegar
+  por el navbar completo en cada pagina.
+  Requisito WCAG 2.1 criterio 2.4.1 (nivel A).
+  ============================================================
+*/
+.skip-to-content {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-accent-500);
+  color: white;
+  font-weight: 600;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+/* Al hacer focus (navegacion por teclado), baja al viewport */
+.skip-to-content:focus {
+  top: 0;
+}
+
+/*
+  ============================================================
+  SCROLLBAR PERSONALIZADO
+  ============================================================
+  Scrollbar delgada y con colores del tema para Chrome/Edge/Safari.
+  Firefox usa scrollbar-width y scrollbar-color (estandar CSS).
+  ============================================================
+*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-primary-900);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-700);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent-500);
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-700) var(--color-primary-900);
+}
+
+/*
+  ============================================================
+  CLASES UTILITARIAS GLOBALES
+  ============================================================
+*/
+
+/* Contenedor con ancho maximo y padding horizontal responsive.
+   Mantiene el contenido centrado y con respiro en los costados. */
+.container-gym {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-gym {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-gym {
+    padding-inline: 2rem;
+  }
+}
+
+/* Clase para el hero zoom al cargar pagina */
+.hero-zoom {
+  animation: heroZoom 1.5s ease forwards;
+}
+
+/* Transicion para los items del slider */
+.slider-transition {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+

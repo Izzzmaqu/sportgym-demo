@@ -1,0 +1,278 @@
+<!--
+  SERVICES PAGE TEMPLATE — SportGym Costa Rica
+  ==============================================
+  Pagina de servicios con las zonas de entrenamiento y planes de membresia.
+-->
+
+<!-- ============================================================
+     HERO DE LA PAGINA
+     ============================================================ -->
+<section
+  class="relative bg-primary-950 py-20 lg:py-32 overflow-hidden"
+  aria-labelledby="services-hero-heading"
+>
+  <div class="absolute inset-0 opacity-10" aria-hidden="true">
+    <img
+      src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=60&fit=crop"
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div class="absolute inset-0 bg-linear-to-b from-primary-950/50 to-primary-950" aria-hidden="true"></div>
+
+  <div class="container-gym relative text-center">
+    <p class="text-accent-400 text-sm font-semibold uppercase tracking-widest mb-4">
+      Lo que ofrecemos
+    </p>
+    <h1 id="services-hero-heading" class="text-white text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+      Nuestros <span class="text-accent-400">Servicios</span>
+    </h1>
+    <p class="text-primary-300 text-lg max-w-2xl mx-auto leading-relaxed">
+      Seis zonas especializadas y planes para todos los niveles. Encontra tu forma ideal de entrenar.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ZONAS DE ENTRENAMIENTO
+     ============================================================ -->
+<section class="bg-primary-900 py-16 lg:py-24" aria-labelledby="zones-heading">
+  <div class="container-gym">
+
+    <div class="text-center mb-12 animate-on-scroll">
+      <h2 id="zones-heading" class="text-white text-3xl lg:text-4xl font-bold mb-4">
+        Zonas de <span class="text-accent-400">entrenamiento</span>
+      </h2>
+      <p class="text-primary-400 max-w-xl mx-auto text-sm">
+        Cada zona esta disenada para maximizar tu rendimiento con equipos de ultima generacion.
+      </p>
+    </div>
+
+    <!--
+      Grid de zonas: 1 col mobile, 2 col tablet, 3 col desktop.
+      Cada card es un <article> semantico con role de contenido independiente.
+    -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      @for (zone of zones; track zone.id; let i = $index) {
+        <article
+          class="bg-primary-800 rounded-2xl overflow-hidden ring-1 ring-primary-700/40 hover:ring-accent-500/40 transition-all duration-300 hover:-translate-y-1 group animate-on-scroll"
+          [class.animate-delay-100]="i % 3 === 1"
+          [class.animate-delay-200]="i % 3 === 2"
+          [attr.aria-label]="'Zona de ' + zone.name"
+        >
+          <!-- Imagen de la zona con zoom al hover -->
+          <div class="relative overflow-hidden" style="aspect-ratio: 16/9">
+            <img
+              [src]="zone.image"
+              [alt]="'Zona de ' + zone.name + ' en SportGym Costa Rica'"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <!-- Precio por mes -->
+            <div class="absolute top-3 right-3">
+              <span class="bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+              ₡{{ zone.price.toLocaleString('es-CR') }}/sesión
+              </span>
+            </div>
+            <!-- Gradiente inferior para mejorar legibilidad -->
+            <div class="absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-primary-800 to-transparent" aria-hidden="true"></div>
+          </div>
+
+          <!-- Contenido de la card -->
+          <div class="p-6">
+            <h3 class="text-white font-bold text-xl mb-2">{{ zone.name }}</h3>
+            <p class="text-primary-300 text-sm leading-relaxed mb-4">{{ zone.description }}</p>
+
+            <!-- Info de instructor y capacidad -->
+            <div class="flex items-center gap-4 mb-4 text-xs text-primary-400">
+              <div class="flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-accent-500/70" aria-hidden="true">
+                  <!-- Icono de usuario (instructor) -->
+                  <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
+                </svg>
+                <span>{{ zone.instructor }}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-accent-500/70" aria-hidden="true">
+                  <!-- Icono de grupo (capacidad maxima) -->
+                  <path d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z" />
+                </svg>
+                <span>Max. {{ zone.capacity }} personas</span>
+              </div>
+            </div>
+
+            <!-- Lista de caracteristicas de la zona -->
+            <ul class="space-y-1.5" aria-label="Caracteristicas de la zona {{ zone.name }}">
+              @for (feature of zone.features; track feature) {
+                <li class="flex items-start gap-2 text-xs text-primary-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-accent-400 shrink-0 mt-0.5" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                  </svg>
+                  {{ feature }}
+                </li>
+              }
+            </ul>
+
+            <!-- Horario de la zona -->
+            <div class="mt-4 pt-4 border-t border-primary-700/50 text-xs text-primary-500">
+              <span class="font-medium text-primary-400">Horario: </span>{{ zone.schedule }}
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PLANES DE MEMBRESIA
+     ============================================================ -->
+<section class="bg-primary-950 py-16 lg:py-24" aria-labelledby="plans-heading">
+  <div class="container-gym">
+
+    <div class="text-center mb-12 animate-on-scroll">
+      <p class="text-accent-400 text-sm font-semibold uppercase tracking-widest mb-3">
+        Inversion en tu salud
+      </p>
+      <h2 id="plans-heading" class="text-white text-3xl lg:text-4xl font-bold mb-4">
+        Planes de <span class="text-accent-400">membresía</span>
+      </h2>
+      <p class="text-primary-400 max-w-xl mx-auto text-sm">
+        Escoge el plan que mejor se adapte a tus objetivos y presupuesto.
+      </p>
+    </div>
+
+    <!--
+      Grid de planes: 1 col mobile, 3 col desktop.
+      El plan "destacado" (highlighted) tiene un anillo de accent y badge especial.
+    -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      @for (plan of plans; track plan.id; let i = $index) {
+        <div
+          class="rounded-2xl p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 animate-on-scroll relative overflow-hidden"
+          [class.bg-primary-800]="!plan.highlighted"
+          [class.ring-1]="!plan.highlighted"
+          [class.ring-primary-700]="!plan.highlighted"
+          [class.bg-accent-600]="plan.highlighted"
+          [class.shadow-2xl]="plan.highlighted"
+          [class.shadow-accent-500/30]="plan.highlighted"
+          [class.animate-delay-100]="i === 1"
+          [class.animate-delay-200]="i === 2"
+          [attr.aria-label]="'Plan ' + plan.name + ' por ' + plan.price.toLocaleString('es-CR') + ' colones al mes'"
+        >
+          <!-- Badge "más popular" solo en plan destacado -->
+          @if (plan.highlighted) {
+            <div class="absolute top-4 right-4">
+              <span class="bg-white/20 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                ⭐ Más popular
+              </span>
+            </div>
+          }
+
+          <!-- Nombre e icono del plan -->
+          <h3
+            class="font-bold text-xl mb-1"
+            [class.text-white]="true"
+          >
+            {{ plan.name }}
+          </h3>
+          <p
+            class="text-sm mb-6 leading-relaxed"
+            [class.text-primary-400]="!plan.highlighted"
+            [class.text-white/80]="plan.highlighted"
+          >
+            {{ plan.description }}
+          </p>
+
+          <!-- Precio -->
+          <div class="mb-6">
+            <div class="flex items-end gap-1">
+              <span class="text-white text-4xl font-extrabold leading-none">
+                ₡{{ plan.price.toLocaleString('es-CR') }}
+              </span>
+            </div>
+            <span
+              class="text-sm"
+              [class.text-primary-500]="!plan.highlighted"
+              [class.text-white/60]="plan.highlighted"
+            >
+              por mes
+            </span>
+          </div>
+
+          <!-- Lista de funcionalidades del plan -->
+          <ul class="space-y-2 mb-8 flex-1" [attr.aria-label]="'Funcionalidades del plan ' + plan.name">
+            @for (feature of plan.features; track feature) {
+              <li class="flex items-start gap-2 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  class="w-4 h-4 shrink-0 mt-0.5"
+                  [class.text-accent-400]="!plan.highlighted"
+                  [class.text-white]="plan.highlighted"
+                  aria-hidden="true"
+                >
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                </svg>
+                <span [class.text-primary-300]="!plan.highlighted" [class.text-white/90]="plan.highlighted">
+                  {{ feature }}
+                </span>
+              </li>
+            }
+            <!-- Funciones NO incluidas en el plan (aparecen tachadas) -->
+            @for (excluded of plan.notIncluded; track excluded) {
+              <li class="flex items-start gap-2 text-sm opacity-40">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  class="w-4 h-4 shrink-0 mt-0.5 text-primary-500"
+                  aria-hidden="true"
+                >
+                  <!-- Icono X para funciones no incluidas -->
+                  <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                </svg>
+                <span class="line-through text-primary-500">{{ excluded }}</span>
+              </li>
+            }
+          </ul>
+
+          <!-- Boton CTA del plan -->
+          <a
+            routerLink="/registro"
+            class="w-full text-center py-3 rounded-xl font-semibold transition-all duration-200 hover:-translate-y-0.5 block"
+            [class.bg-accent-500]="!plan.highlighted"
+            [class.hover:bg-accent-600]="!plan.highlighted"
+            [class.text-white]="!plan.highlighted"
+            [class.bg-white]="plan.highlighted"
+            [class.text-accent-700]="plan.highlighted"
+            [class.hover:bg-gray-100]="plan.highlighted"
+            [attr.aria-label]="'Elegir plan ' + plan.name + ' por ₡' + plan.price.toLocaleString('es-CR') + ' al mes'"
+          >
+            Elegir este plan
+          </a>
+        </div>
+      }
+    </div>
+
+    <!-- Nota legal pequeña -->
+    <p class="text-center text-primary-600 text-xs mt-8">
+      * Precios en colones costarricenses (CRC). Membresía mensual con renovacion automatica. Podes cancelar en cualquier momento.
+    </p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="bg-primary-800 py-14" aria-labelledby="services-cta-heading">
+  <div class="container-gym text-center">
+    <h2 id="services-cta-heading" class="text-white text-2xl font-bold mb-4">
+      ¿Tenes preguntas sobre nuestros servicios?
+    </h2>
+    <p class="text-primary-400 mb-6">
+      Nuestro equipo esta disponible para orientarte con el plan ideal.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a routerLink="/contacto" class="px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5">
+        Contactar ahora
+      </a>
+      <a routerLink="/mapa" class="px-6 py-3 bg-primary-700 hover:bg-primary-600 text-white font-semibold rounded-xl transition-all duration-200 border border-primary-600">
+        Ver ubicacion
+      </a>
+    </div>
+  </div>
+</section>

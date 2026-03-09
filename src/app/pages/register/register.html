@@ -1,0 +1,476 @@
+<!--
+  REGISTER PAGE TEMPLATE — SportGym Costa Rica
+  =============================================
+  Formulario de registro de nuevo miembro.
+  NO procesa datos reales — fachada de demostración.
+-->
+
+<!-- ============================================================
+     HERO MINIMALISTA
+     ============================================================ -->
+<section class="bg-primary-950 py-16 lg:py-24" aria-labelledby="register-hero-heading">
+  <div class="container-gym">
+    <div class="max-w-xl mx-auto text-center mb-10">
+      <a routerLink="/" aria-label="Volver al inicio SportGym" class="inline-block mb-6">
+        <span class="text-accent-400 text-2xl font-extrabold tracking-tight">Sport<span class="text-white">Gym</span></span>
+      </a>
+      <h1 id="register-hero-heading" class="text-white text-3xl lg:text-4xl font-bold mb-3">
+        Crea tu cuenta
+      </h1>
+      <p class="text-primary-400 text-sm">
+        ¿Ya tenés cuenta?
+        <a routerLink="/login" class="text-accent-400 hover:text-accent-300 font-medium transition-colors">
+          Iniciá sesión aquí
+        </a>
+      </p>
+    </div>
+
+    <!--
+      MENSAJE DE EXITO POST-REGISTRO
+    -->
+    @if (submitted()) {
+      <div
+        role="alert"
+        aria-live="assertive"
+        class="max-w-md mx-auto bg-green-900/30 border border-green-700/40 rounded-2xl p-8 text-center"
+      >
+        <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-green-400" aria-hidden="true">
+            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <h2 class="text-white font-bold text-xl mb-2">¡Bienvenido a SportGym!</h2>
+        <p class="text-primary-300 text-sm mb-6">
+          Tu cuenta ha sido creada (demostración). En una app real, recibirías un correo de confirmacion.
+        </p>
+        <a routerLink="/" class="inline-block px-6 py-2.5 bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold rounded-xl transition-all duration-200">
+          Ir al inicio
+        </a>
+      </div>
+    }
+
+    <!--
+      FORMULARIO DE REGISTRO
+    -->
+    @if (!submitted()) {
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        aria-label="Formulario de registro SportGym"
+        class="max-w-2xl mx-auto bg-primary-900 rounded-2xl p-7 lg:p-10 ring-1 ring-primary-700/40 space-y-6"
+      >
+
+        <!-- ======================================================
+             SECCION: DATOS PERSONALES
+             ====================================================== -->
+        <fieldset class="space-y-5">
+          <legend class="text-white font-semibold text-base mb-4 flex items-center gap-2">
+            <span class="w-6 h-6 bg-accent-500/20 text-accent-400 rounded-lg flex items-center justify-center text-xs font-bold" aria-hidden="true">1</span>
+            Datos personales
+          </legend>
+
+          <!-- Identificacion -->
+          <div>
+            <label for="reg-identificacion" class="block text-sm font-medium text-primary-300 mb-1.5">
+              Cédula de identidad <span class="text-accent-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="reg-identificacion"
+              type="text"
+              inputmode="numeric"
+              formControlName="identificacion"
+              placeholder="Ej: 123456789"
+              maxlength="9"
+              class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all duration-200"
+              [class.border-primary-700]="!showError('identificacion')"
+              [class.border-red-500]="showError('identificacion')"
+              [attr.aria-invalid]="showError('identificacion') ? 'true' : null"
+              aria-describedby="reg-id-error reg-id-hint"
+              aria-required="true"
+            />
+            <span id="reg-id-hint" class="text-primary-500 text-xs mt-1 block">
+              9 dígitos, sin espacios ni guiones.
+            </span>
+            @if (showError('identificacion')) {
+              <span id="reg-id-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1 block">
+                @if (field('identificacion').hasError('required')) { La cédula es requerida. }
+                @else if (field('identificacion').hasError('pattern')) { Debe tener exactamente 9 dígitos numéricos. }
+              </span>
+            } @else {
+              <span id="reg-id-error" class="sr-only"></span>
+            }
+          </div>
+
+          <!-- Nombre + Primer Apellido -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="reg-nombre" class="block text-sm font-medium text-primary-300 mb-1.5">
+                Nombre <span class="text-accent-400" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="reg-nombre"
+                type="text"
+                formControlName="nombre"
+                autocomplete="given-name"
+                placeholder="Ej: Carlos"
+                class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+                [class.border-primary-700]="!showError('nombre')"
+                [class.border-red-500]="showError('nombre')"
+                [attr.aria-invalid]="showError('nombre') ? 'true' : null"
+                aria-describedby="reg-nombre-error"
+                aria-required="true"
+              />
+              @if (showError('nombre')) {
+                <span id="reg-nombre-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block">
+                  @if (field('nombre').hasError('required')) { Requerido. }
+                  @else if (field('nombre').hasError('minlength')) { Mínimo 2 caracteres. }
+                </span>
+              } @else {
+                <span id="reg-nombre-error" class="sr-only"></span>
+              }
+            </div>
+
+            <div>
+              <label for="reg-primer-apellido" class="block text-sm font-medium text-primary-300 mb-1.5">
+                Primer apellido <span class="text-accent-400" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="reg-primer-apellido"
+                type="text"
+                formControlName="primerApellido"
+                autocomplete="family-name"
+                placeholder="Ej: Vargas"
+                class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+                [class.border-primary-700]="!showError('primerApellido')"
+                [class.border-red-500]="showError('primerApellido')"
+                [attr.aria-invalid]="showError('primerApellido') ? 'true' : null"
+                aria-describedby="reg-apellido1-error"
+                aria-required="true"
+              />
+              @if (showError('primerApellido')) {
+                <span id="reg-apellido1-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block">
+                  @if (field('primerApellido').hasError('required')) { Requerido. }
+                  @else if (field('primerApellido').hasError('minlength')) { Mínimo 2 caracteres. }
+                </span>
+              } @else {
+                <span id="reg-apellido1-error" class="sr-only"></span>
+              }
+            </div>
+          </div>
+
+          <!-- Segundo Apellido (opcional) + Email -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="reg-segundo-apellido" class="block text-sm font-medium text-primary-300 mb-1.5">
+                Segundo apellido
+                <span class="text-primary-500 text-xs font-normal ml-1">(opcional)</span>
+              </label>
+              <input
+                id="reg-segundo-apellido"
+                type="text"
+                formControlName="segundoApellido"
+                autocomplete="additional-name"
+                placeholder="Ej: Mora"
+                class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border border-primary-700 placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+              />
+            </div>
+
+            <div>
+              <label for="reg-email" class="block text-sm font-medium text-primary-300 mb-1.5">
+                Correo electrónico <span class="text-accent-400" aria-hidden="true">*</span>
+              </label>
+              <input
+                id="reg-email"
+                type="email"
+                formControlName="email"
+                autocomplete="email"
+                placeholder="tu@correo.com"
+                class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+                [class.border-primary-700]="!showError('email')"
+                [class.border-red-500]="showError('email')"
+                [attr.aria-invalid]="showError('email') ? 'true' : null"
+                aria-describedby="reg-email-error"
+                aria-required="true"
+              />
+              @if (showError('email')) {
+                <span id="reg-email-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block">
+                  @if (field('email').hasError('required')) { El correo es requerido. }
+                  @else if (field('email').hasError('email')) { Ingresá un correo válido. }
+                </span>
+              } @else {
+                <span id="reg-email-error" class="sr-only"></span>
+              }
+            </div>
+          </div>
+
+          <!-- Telefono -->
+          <div class="max-w-xs">
+            <label for="reg-telefono" class="block text-sm font-medium text-primary-300 mb-1.5">
+              Teléfono <span class="text-accent-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="reg-telefono"
+              type="tel"
+              formControlName="telefono"
+              autocomplete="tel"
+              placeholder="8897-4561"
+              class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+              [class.border-primary-700]="!showError('telefono')"
+              [class.border-red-500]="showError('telefono')"
+              [attr.aria-invalid]="showError('telefono') ? 'true' : null"
+              aria-describedby="reg-telefono-error reg-telefono-hint"
+              aria-required="true"
+            />
+            <span id="reg-telefono-hint" class="text-primary-500 text-xs mt-1 block">
+              Formato CR: XXXX-XXXX
+            </span>
+            @if (showError('telefono')) {
+              <span id="reg-telefono-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1 block">
+                @if (field('telefono').hasError('required')) { El teléfono es requerido. }
+                @else if (field('telefono').hasError('pattern')) { Formato esperado: 8897-4561 }
+              </span>
+            } @else {
+              <span id="reg-telefono-error" class="sr-only"></span>
+            }
+          </div>
+        </fieldset>
+
+        <hr class="border-primary-700/50" role="separator" />
+
+        <!-- ======================================================
+             SECCION: DATOS DE ACCESO
+             ====================================================== -->
+        <fieldset class="space-y-5">
+          <legend class="text-white font-semibold text-base mb-4 flex items-center gap-2">
+            <span class="w-6 h-6 bg-accent-500/20 text-accent-400 rounded-lg flex items-center justify-center text-xs font-bold" aria-hidden="true">2</span>
+            Datos de acceso
+          </legend>
+
+          <!-- Usuario -->
+          <div>
+            <label for="reg-usuario" class="block text-sm font-medium text-primary-300 mb-1.5">
+              Nombre de usuario <span class="text-accent-400" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="reg-usuario"
+              type="text"
+              formControlName="usuario"
+              autocomplete="username"
+              placeholder="Ej: carlos_vargas"
+              class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+              [class.border-primary-700]="!showError('usuario')"
+              [class.border-red-500]="showError('usuario')"
+              [attr.aria-invalid]="showError('usuario') ? 'true' : null"
+              aria-describedby="reg-usuario-error reg-usuario-hint"
+              aria-required="true"
+            />
+            <span id="reg-usuario-hint" class="text-primary-500 text-xs mt-1 block">
+              4–20 caracteres: letras, números y guion bajo únicamente.
+            </span>
+            @if (showError('usuario')) {
+              <span id="reg-usuario-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1 block">
+                @if (field('usuario').hasError('required')) { El usuario es requerido. }
+                @else if (field('usuario').hasError('minlength')) { Mínimo 4 caracteres. }
+                @else if (field('usuario').hasError('maxlength')) { Máximo 20 caracteres. }
+                @else if (field('usuario').hasError('pattern')) { Solo letras, números y guion bajo ( _ ). }
+              </span>
+            } @else {
+              <span id="reg-usuario-error" class="sr-only"></span>
+            }
+          </div>
+
+          <!-- Password + Confirmar Password -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <!-- Contrasena -->
+            <div>
+              <label for="reg-password" class="block text-sm font-medium text-primary-300 mb-1.5">
+                Contraseña <span class="text-accent-400" aria-hidden="true">*</span>
+              </label>
+              <div class="relative">
+                <input
+                  id="reg-password"
+                  [type]="showPassword() ? 'text' : 'password'"
+                  formControlName="password"
+                  autocomplete="new-password"
+                  placeholder="Min. 8 caracteres"
+                  class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 pr-10 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+                  [class.border-primary-700]="!showError('password')"
+                  [class.border-red-500]="showError('password')"
+                  [attr.aria-invalid]="showError('password') ? 'true' : null"
+                  aria-describedby="reg-password-error reg-password-hint"
+                  aria-required="true"
+                />
+                <!-- Toggle mostrar/ocultar contrasena -->
+                <button
+                  type="button"
+                  (click)="showPassword.set(!showPassword())"
+                  class="absolute inset-y-0 right-3 flex items-center text-primary-500 hover:text-primary-300 transition-colors"
+                  [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                  [attr.aria-pressed]="showPassword()"
+                >
+                  @if (showPassword()) {
+                    <!-- Icono "ojo cerrado" cuando la contrasena es visible -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clip-rule="evenodd" />
+                      <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />
+                    </svg>
+                  } @else {
+                    <!-- Icono "ojo abierto" cuando la contrasena esta oculta -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true">
+                      <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                      <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
+                    </svg>
+                  }
+                </button>
+              </div>
+              <span id="reg-password-hint" class="text-primary-500 text-xs mt-1 block">
+                Mínimo 8 caracteres con letras y números.
+              </span>
+              @if (showError('password')) {
+                <span id="reg-password-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1 block">
+                  @if (field('password').hasError('required')) { La contraseña es requerida. }
+                  @else if (field('password').hasError('minlength')) { Mínimo 8 caracteres. }
+                  @else if (field('password').hasError('pattern')) { Debe contener letras y números. }
+                </span>
+              } @else {
+                <span id="reg-password-error" class="sr-only"></span>
+              }
+            </div>
+
+            <!-- Confirmar Contrasena -->
+            <div>
+              <label for="reg-confirm-password" class="block text-sm font-medium text-primary-300 mb-1.5">
+                Confirmar contraseña <span class="text-accent-400" aria-hidden="true">*</span>
+              </label>
+              <div class="relative">
+                <input
+                  id="reg-confirm-password"
+                  [type]="showConfirmPassword() ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+                  autocomplete="new-password"
+                  placeholder="Repetí la contraseña"
+                  class="w-full bg-primary-800 text-white rounded-xl px-4 py-3 pr-10 text-sm border placeholder:text-primary-600 focus:outline-none focus:ring-2 focus:ring-accent-500/60 transition-all"
+                  [class.border-primary-700]="!showError('confirmPassword') && !passwordMismatch"
+                  [class.border-red-500]="showError('confirmPassword') || passwordMismatch"
+                  [attr.aria-invalid]="(showError('confirmPassword') || passwordMismatch) ? 'true' : null"
+                  aria-describedby="reg-confirm-error"
+                  aria-required="true"
+                />
+                <button
+                  type="button"
+                  (click)="showConfirmPassword.set(!showConfirmPassword())"
+                  class="absolute inset-y-0 right-3 flex items-center text-primary-500 hover:text-primary-300 transition-colors"
+                  [attr.aria-label]="showConfirmPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                  [attr.aria-pressed]="showConfirmPassword()"
+                >
+                  @if (showConfirmPassword()) {
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path fill-rule="evenodd" d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z" clip-rule="evenodd" /><path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" /></svg>
+                  } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4" aria-hidden="true"><path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" /><path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" /></svg>
+                  }
+                </button>
+              </div>
+              @if (showError('confirmPassword') || passwordMismatch) {
+                <span id="reg-confirm-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block">
+                  @if (field('confirmPassword').hasError('required')) { Confirmá la contraseña. }
+                  @else if (passwordMismatch) { Las contraseñas no coinciden. }
+                </span>
+              } @else {
+                <span id="reg-confirm-error" class="sr-only"></span>
+              }
+            </div>
+          </div>
+        </fieldset>
+
+        <hr class="border-primary-700/50" role="separator" />
+
+        <!-- ======================================================
+             SECCION: PLAN DE MEMBRESIA
+             ====================================================== -->
+        <fieldset class="space-y-3">
+          <legend class="text-white font-semibold text-base mb-4 flex items-center gap-2">
+            <span class="w-6 h-6 bg-accent-500/20 text-accent-400 rounded-lg flex items-center justify-center text-xs font-bold" aria-hidden="true">3</span>
+            Elige tu plan de membresía
+          </legend>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            @for (plan of plans; track plan.id) {
+              <label
+                class="flex flex-col p-4 rounded-xl border cursor-pointer transition-all duration-200 hover:border-accent-500/50"
+                [class.border-accent-500]="field('plan').value === plan.name"
+                [class.bg-accent-500/10]="field('plan').value === plan.name"
+                [class.border-primary-700]="field('plan').value !== plan.name"
+                [class.bg-primary-800]="field('plan').value !== plan.name"
+              >
+                <input
+                  type="radio"
+                  formControlName="plan"
+                  [value]="plan.name"
+                  class="sr-only"
+                  [attr.aria-label]="plan.name + ' por ₡' + plan.price.toLocaleString('es-CR') + ' al mes'"
+                />
+                <span class="text-white text-sm font-semibold mb-1">{{ plan.name }}</span>
+                <span class="text-accent-400 font-bold text-base">₡{{ plan.price.toLocaleString('es-CR') }}<span class="text-primary-500 text-xs font-normal">/mes</span></span>
+                <span class="text-primary-400 text-xs mt-1">{{ plan.description }}</span>
+              </label>
+            }
+          </div>
+        </fieldset>
+
+        <hr class="border-primary-700/50" role="separator" />
+
+        <!-- ======================================================
+             TERMINOS Y CONDICIONES
+             ====================================================== -->
+        <div>
+          <label class="flex items-start gap-3 cursor-pointer group">
+            <input
+              type="checkbox"
+              formControlName="terminosYCond"
+              class="mt-0.5 w-4 h-4 rounded accent-orange-500 shrink-0 cursor-pointer"
+              [attr.aria-invalid]="showError('terminosYCond') ? 'true' : null"
+              aria-describedby="reg-terminos-error"
+              aria-required="true"
+            />
+            <span class="text-primary-400 text-sm leading-relaxed">
+              Acepto los
+              <a routerLink="/" class="text-accent-400 hover:underline">Términos y Condiciones</a>
+              y la
+              <a routerLink="/" class="text-accent-400 hover:underline">Política de Privacidad</a>
+              de SportGym. <span class="text-accent-400 text-xs">(Esta es una demostración)</span>
+            </span>
+          </label>
+          @if (showError('terminosYCond')) {
+            <span id="reg-terminos-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1.5 block ml-7">
+              Debés aceptar los términos y condiciones.
+            </span>
+          } @else {
+            <span id="reg-terminos-error" class="sr-only"></span>
+          }
+        </div>
+
+        <!-- Boton de envio -->
+        <button
+          type="submit"
+          class="w-full py-3.5 bg-accent-500 hover:bg-accent-600 disabled:bg-primary-700 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+          [disabled]="isSubmitting()"
+          [attr.aria-busy]="isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <span>Creando cuenta...</span>
+          } @else {
+            <span>Crear mi cuenta</span>
+          }
+        </button>
+
+      </form>
+    }
+
+  </div>
+</section>
